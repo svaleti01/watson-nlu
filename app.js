@@ -38,12 +38,13 @@ analyzeEmotions.post('/', function(req, res, next) {
       }
     }
   };
-  console.log(analyzeParams);
   
   naturalLanguageUnderstanding.analyze(analyzeParams)
   .then(analysisResults => {
-    console.log(JSON.stringify(analysisResults, null, 2));
-    res.send(JSON.stringify(analysisResults, null, 2));
+    const result = analysisResults.result.emotion.targets;
+    console.log(result[0].emotion.joy);
+    const response = result[0].emotion;
+    res.send(JSON.stringify(response, null, 2));
   })
   .catch(err => {
     console.log('error:', err);
